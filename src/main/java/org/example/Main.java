@@ -7,29 +7,41 @@ import org.example.Model.Request;
 import java.math.BigInteger;
 
 public class Main {
+    private static int number;
+    private static  boolean ready;
+    private static class ReaderThread extends Thread{
+        @Override
+        public void run(){
+            while(!ready)
+                    Thread.yield();
+            System.out.println(number);
+        }
+    }
     public static void main(String[] args) throws InterruptedException {
+
         UnsafeCachingFactorizer unsafeCachingFactorizer = new UnsafeCachingFactorizer();
 
+        /*
         Thread t1 = new Thread(){
 
             @Override
             public void run(){
-                unsafeCachingFactorizer.makeCall(new Request(new BigInteger(String.valueOf(30))));
+                while(!ready)
+                    Thread.yield();
+                System.out.println(number);
 
             }
         };
 
-        Thread t2 = new Thread(){
-            @Override
-            public void run(){
-                unsafeCachingFactorizer.makeCall(new Request(new BigInteger(String.valueOf(50))));
-            }
+        new ReaderThread().start();
+        number = 42;
+        ready = true;
+        *
+         */
+        ImproperPublication improperPublication = new ImproperPublication();
+        improperPublication.run();
 
-        };
-        t1.start();
-        t2.start();
-        Thread.sleep(1000);
 
-        unsafeCachingFactorizer.getLastFactor();
+
     }
 }
