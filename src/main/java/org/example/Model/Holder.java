@@ -3,7 +3,7 @@ package org.example.Model;
 public class Holder {
     private int n;
     public Holder(int n) throws InterruptedException {
-        Thread.sleep(0);
+        Thread.sleep(10);
         this.n = n;
 
     }

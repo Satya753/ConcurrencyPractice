@@ -11,20 +11,15 @@ public class ImproperPublication implements  Runnable{
     @Override
     public void run() {
 
-            Thread initialize = new Thread(){
-                @Override
-                public void  run(){
-                    try {
-                        initialize();
-                    } catch (InterruptedException e) {
-                        throw new RuntimeException(e);
-                    }
-                }
-            };
 
         Thread t1 = new Thread(){
             @Override
             public void run(){
+                try {
+                    initialize();
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
                 holder.assertSanityCheck();
             }
         };
@@ -32,10 +27,14 @@ public class ImproperPublication implements  Runnable{
         Thread t2 = new Thread(){
             @Override
             public void run(){
+                try {
+                    initialize();
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
                 holder.assertSanityCheck();
             }
         };
-        initialize.start();
         t1.start();
         t2.start();
 

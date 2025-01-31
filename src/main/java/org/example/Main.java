@@ -2,9 +2,12 @@ package org.example;
 
 
 import com.sun.net.httpserver.HttpExchange;
+import com.sun.source.tree.SynchronizedTree;
 import org.example.Model.Request;
 
 import java.math.BigInteger;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.SynchronousQueue;
 
 public class Main {
     private static int number;
@@ -18,7 +21,7 @@ public class Main {
         }
     }
     public static void main(String[] args) throws InterruptedException {
-
+        ConcurrentHashMap<String , Integer> mp = new ConcurrentHashMap<>();
         UnsafeCachingFactorizer unsafeCachingFactorizer = new UnsafeCachingFactorizer();
 
         /*
