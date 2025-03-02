@@ -104,8 +104,16 @@ public class Main {
         Testing latches countdown latches
          */
 
+        /*
         CountDownLatches countDownLatches = new CountDownLatches(10);
         countDownLatches.start(10 , new Task());
+        *
+
+         */
+
+        PreLoader preLoader = new PreLoader();
+        preLoader.start();
+        System.out.println(preLoader.get().getProductId());
 
     }
 }
