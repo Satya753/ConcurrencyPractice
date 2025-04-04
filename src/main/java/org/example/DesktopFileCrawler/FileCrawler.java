@@ -15,6 +15,23 @@ public class FileCrawler implements Runnable{
     }
     @Override
     public void run() {
+        try{
+            crawl(root);
+        }catch (Exception e){
+            Thread.currentThread().interrupt();
+        }
+    }
+    private void crawl(File root) throws InterruptedException{
+        File[] entries = root.listFiles(fileFilter);
+        if (entries!=null){
+            for (File entry : entries){
+                if (entry.isDirectory())
+                    crawl(entry);
+                else
+                    fileQueue.put(entry);
 
+            }
+
+        }
     }
 }
