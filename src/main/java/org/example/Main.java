@@ -3,6 +3,9 @@ package org.example;
 
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.source.tree.SynchronizedTree;
+import org.example.Cache.ExpensiveFunction;
+import org.example.Cache.Memoizer1;
+import org.example.Cache.Memoizer2;
 import org.example.Model.Request;
 
 import java.math.BigInteger;
@@ -75,12 +78,7 @@ public class Main {
 
 
          */
-        Thread t2 = new Thread(){
-            @Override
-            public void run(){
-                System.out.println("Executed this consumer");
-            }
-        };
+
 
       //  t2.start();
         //t1.start();
@@ -110,10 +108,50 @@ public class Main {
         *
 
          */
+        /*
+        int processors = Runtime.getRuntime().availableProcessors();
+        System.out.println(processors  + " --");
 
         PreLoader preLoader = new PreLoader();
         preLoader.start();
         System.out.println(preLoader.get().getProductId());
+         */
+        ExpensiveFunction expensiveFunction = new ExpensiveFunction();
+        Memoizer1 memoizer1 = new Memoizer1(expensiveFunction);
+        Memoizer2 memoizer2 = new Memoizer2(expensiveFunction);
+        long starttime =  System.currentTimeMillis();
+        Thread t1 = new Thread(){
+            @Override
+            public  void run(){
+                try {
+                    BigInteger t = (BigInteger) memoizer1.compute("1");
+                    System.out.println(t);
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        };
+
+        Thread t2 = new Thread(){
+            @Override
+            public void run(){
+                try {
+                    BigInteger t = (BigInteger) memoizer1.compute("1");
+                    System.out.println(t);
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        };
+
+        t1.setDaemon(true);
+        t2.setDaemon(true);
+        t2.start();
+        t1.start();
+        long endtime = System.currentTimeMillis();
+        System.out.println(endtime - starttime + "----");
+
+
 
     }
 }
