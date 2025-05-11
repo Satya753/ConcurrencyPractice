@@ -23,6 +23,7 @@ public class BrokenPrimeProducer extends Thread{
         }
     }
     public void cancel(){
+     //   interrupt();
         cancelled = true;
     }
 }
